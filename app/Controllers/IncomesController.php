@@ -1,4 +1,8 @@
 <?php
+namespace App\Controllers;
+
+use Database\MySQLi\Connection;
+
 class IncomesController{
     public function index() {
         
@@ -8,8 +12,16 @@ class IncomesController{
         
     }
 
-    public function store() {
-        
+    public function store($data) {
+        $connection = Connection::getInstance()->get_database_instance();
+
+        $connection->query("INSERT INTO incomes (payment_method, type, date, amount, description) VALUES(
+        {$data['payment_method']},
+        {$data['type']},
+        '{$data['date']}',
+        {$data['amount']},
+        '{$data['description']}'
+        );");
     }
 
     public function show() {

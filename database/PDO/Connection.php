@@ -21,13 +21,12 @@ class Connection {
     private function make_connection(){
 $server     =   "127.0.0.1";
 $database   =   "finanzas_personales";
-$username   =   "root";
-$password   =   "";
-$port       =   3307;
+$username   =   "admin";
+$password   =   "000000";
 
-$connenction = new \PDO("mysql:host=$server;dbname=$database;port=$port", $username, $password);
+$connection = new \PDO("mysql:host=$server;dbname=$database", $username, $password);
 
-$setnames = $connenction->prepare("SET NAMES 'utf8'");
+$setnames = $connection->prepare("SET NAMES 'utf8'");
 $setnames->execute();
 
 $this->connection = $connection;
