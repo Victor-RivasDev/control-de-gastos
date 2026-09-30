@@ -11,6 +11,6 @@ $incomes_controller->store([
     "payment_method"    => PaymentMethodEnum::BankAccount->value,
     "type"              => IncomeTypeEnum::Salary->value,
     "date"              => date("Y-m-d H:i:s"),
-    "amount"            => 10000000,
+    "amount"            => 1000000,
     "description"       => "Pago de mi salario por arduo trabajo"
 ]);

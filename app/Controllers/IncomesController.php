@@ -15,13 +15,24 @@ class IncomesController{
     public function store($data) {
         $connection = Connection::getInstance()->get_database_instance();
 
-        $connection->query("INSERT INTO incomes (payment_method, type, date, amount, description) VALUES(
+        $stmt = $connection->prepare("INSERT INTO incomes (payment_method, type, date, amount, description) VALUES(?,?,?,?,?);");
+
+        $stmt->bind_param("iisds", $paymen_method, $type, $date, $amount, $description);
+        $paymen_method  =   $data['payment_method'];
+        $type           =   $data['type'];
+        $date           =   $data['date'];
+        $amount         =   $data['amount'];
+        $description    =   $data['description'];
+
+        $stmt->execute();
+        echo "Se han insertado {$stmt->affected_rows} filas en la base de datos";
+        /*
         {$data['payment_method']},
         {$data['type']},
         '{$data['date']}',
         {$data['amount']},
         '{$data['description']}'
-        );");
+        */
     }
 
     public function show() {
