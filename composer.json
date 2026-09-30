@@ -1,12 +1,17 @@
 {
-    "name": "victo/base_de_datos_php",
-    "description": "Proyecto del curso de conexion de php con base de datos",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Victor Rivas",
-            "email": "victorjosuerivaszambrano@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "victo/base_de_datos_php",
+  "description": "Proyecto del curso de conexion de php con base de datos",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Victor Rivas",
+      "email": "victorjosuerivaszambrano@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Database\\": "database/"
+    }
+  },
+  "require": {}
 }
