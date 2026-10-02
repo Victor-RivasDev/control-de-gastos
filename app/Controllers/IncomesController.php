@@ -15,14 +15,14 @@ class IncomesController{
         $stmt = $this->connection->prepare("SELECT * FROM incomes");
         $stmt->execute();
 
-        $stmt->bindColumn("amount", $amount);
-        $stmt->bindColumn("description", $description);
 
-        while($stmt->fetch())
-            echo "Ganaste " . $amount . " USD en: " . $description . "\n";
+        $results = $stmt->fetchAll();
+        require("../resources/views/incomes/index.php");
     }
 
-    public function create() {}
+    public function create() {
+        require("../resources/views/incomes/create.php");
+    }
 
     public function store($data) {
         $stmt = $this->connection->prepare("INSERT INTO incomes (payment_method, type, date, amount, description) VALUES (:payment_method, :type, :date, :amount, :description);");
@@ -35,7 +35,7 @@ class IncomesController{
 
         $stmt ->execute();
 
-        echo "Se han insertado {$stmt->affected_rows} filas en la base de datos";
+        header("Location: /incomes");
         
     }
 

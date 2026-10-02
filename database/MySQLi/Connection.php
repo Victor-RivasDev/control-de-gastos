@@ -28,8 +28,8 @@ class Connection {
 
         $server     =   "127.0.0.1";
         $database   =   "finanzas_personales";
-        $username   =   "admin";
-        $password   =   "000000";
+        $username   =   "root";
+        $password   =   "";
         
         // Esta es al forma orientada a objetos
         $mysqli = new \mysqli($server, $username, $password, $database);
