@@ -9,17 +9,20 @@ class IncomesController{
     {
         $this->connection = Connection::getInstance()->get_database_instance();
     }
+
+
     public function index() {
         $stmt = $this->connection->prepare("SELECT * FROM incomes");
         $stmt->execute();
 
-        while($row = $stmt->fetch())
-            echo "Ganaste " . $row["amount"] . " USD en: " . $row["description"] . "\n";
+        $stmt->bindColumn("amount", $amount);
+        $stmt->bindColumn("description", $description);
+
+        while($stmt->fetch())
+            echo "Ganaste " . $amount . " USD en: " . $description . "\n";
     }
 
-    public function create() {
-        
-    }
+    public function create() {}
 
     public function store($data) {
         $stmt = $this->connection->prepare("INSERT INTO incomes (payment_method, type, date, amount, description) VALUES (:payment_method, :type, :date, :amount, :description);");
@@ -33,29 +36,49 @@ class IncomesController{
         $stmt ->execute();
 
         echo "Se han insertado {$stmt->affected_rows} filas en la base de datos";
-        /*
-        {$data['payment_method']},
-        {$data['type']},
-        '{$data['date']}',
-        {$data['amount']},
-        '{$data['description']}'
-        */
-    }
-
-    public function show() {
         
     }
 
-    public function edit() {
-        
+    public function show($id) {
+        $stmt = $this->connection->prepare("SELECT * FROM incomes WHERE id=:id;");
+        $stmt->execute([
+            ":id" => $id
+        ]);
     }
 
-    public function update() {
-        
+    public function edit() {}
+
+    public function update($data, $id) {
+        $stmt = $this->connection->prepare("UPDATE incomes SET
+        payment_method  =   :payment_method,
+        type            =   :type,
+        date            =   :date,
+        amount          =   :amount,
+        description     =   :description,
+    Where id=:id;");
+
+    $stmt->execute([
+        ":id"               =>  $id,
+        ":payment_method"   =>  $data["payment_method"],
+        ":type"             =>  $data["type"],
+        ":date"             =>  $data["date"],
+        ":amount"           =>  $data["amount"],
+        ":description"      =>  $data["description"]
+    ]);
     }
 
-    public function destroy() {
-        
+    public function destroy($id) {
+        // $this->connection->beginTransaction();
+        $stmt = $this->connection->prepare("DELETE FROM incomes WHERE id = :id");
+        $stmt->execute([
+            ":id" => $id
+        ]);
+
+        // $sure = readline("De verdad quieres eliminar este registro? ");
+        // if ($sure == "no")
+        //     $this->connection->rollback();
+        // else
+        //     $this->connection->commit();
     }
 }
 
