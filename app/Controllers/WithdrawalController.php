@@ -26,14 +26,16 @@ class WithdrawalController {
         $stmt = $connection->prepare("INSERT INTO withdrawals (payment_method, type, date, amount, description) VALUES (:payment_method, :type, :date, :amount, :description)");
 
 
-        /*
-            {$data['payment_method']},
-            {$data['type']},
-            '{$data['date']}',
-            {$data['amount']},
-            '{$data['description']}'
-        */
-        $stmt ->execute($data);
+        $stmt->bindValue(":payment_method", $data["payment_method"]);
+        $stmt->bindValue(":type", $data["type"]);
+        $stmt->bindValue(":date", $data["date"]);
+        $stmt->bindValue(":amount", $data["amount"]);
+        $stmt->bindValue(":description", $data["description"]);
+
+
+        $data["description"] = "Compre cosas para mi";
+
+        $stmt ->execute();
 
     }
 
