@@ -2,33 +2,57 @@
 
 namespace App\Controllers;
 
-class WithdrawalController{
-    public function index() {
-        
+use Database\PDO\Connection;
+
+class WithdrawalController {
+
+    /**
+     * Muestra una lista de este recurso
+     */
+    public function index() {}
+
+    /**
+     * Muestra un formulario para crear un nuevo recurso
+     */
+    public function create() {}
+
+    /**
+     * Guarda un nuevo recurso en la base de datos
+     */
+    public function store($data) {
+
+        $connection = Connection::getInstance()->get_database_instance();
+
+        $affected_rows = $connection->exec("INSERT INTO withdrawals (payment_method, type, date, amount, description) VALUES (
+            {$data['payment_method']},
+            {$data['type']},
+            '{$data['date']}',
+            {$data['amount']},
+            '{$data['description']}'
+        )");
+
+        echo "Se han insertado $affected_rows filas en la base de datos.";
+
     }
 
-    public function create() {
-        
-    }
+    /**
+     * Muestra un único recurso especificado
+     */
+    public function show() {}
 
-    public function store() {
-        
-    }
+    /**
+     * Muestra el formulario para editar un recurso
+     */
+    public function edit() {}
 
-    public function show() {
-        
-    }
+    /**
+     * Actualiza un recurso específico en la base de datos
+     */
+    public function update() {}
 
-    public function edit() {
-        
-    }
-
-    public function update() {
-        
-    }
-
-    public function destroy() {
-        
-    }
+    /**
+     * Elimina un recurso específico de la base de datos
+     */
+    public function destroy() {}
+    
 }
-?>
