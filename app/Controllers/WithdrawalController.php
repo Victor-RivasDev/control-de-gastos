@@ -23,15 +23,17 @@ class WithdrawalController {
 
         $connection = Connection::getInstance()->get_database_instance();
 
-        $affected_rows = $connection->exec("INSERT INTO withdrawals (payment_method, type, date, amount, description) VALUES (
+        $stmt = $connection->prepare("INSERT INTO withdrawals (payment_method, type, date, amount, description) VALUES (:payment_method, :type, :date, :amount, :description)");
+
+
+        /*
             {$data['payment_method']},
             {$data['type']},
             '{$data['date']}',
             {$data['amount']},
             '{$data['description']}'
-        )");
-
-        echo "Se han insertado $affected_rows filas en la base de datos.";
+        */
+        $stmt ->execute($data);
 
     }
 
