@@ -5,12 +5,24 @@ namespace App\Controllers;
 use Database\PDO\Connection;
 
 class WithdrawalController {
+private $connection;
+public function __construct()
+{
+    $this->connection = Connection::getInstance()->get_database_instance();
+}
 
     /**
      * Muestra una lista de este recurso
      */
-    public function index() {}
+    public function index() {
+        $stmt = $this->connection->prepare("SELECT * FROM withdrawals");
+        $stmt->execute();
 
+        $results = $stmt->fetchAll();
+        foreach($results as $result)
+            echo "Gastaste " . $result["amount"] . " USD es: " . $result["description"] . "\n";
+    }
+        
     /**
      * Muestra un formulario para crear un nuevo recurso
      */
@@ -21,9 +33,7 @@ class WithdrawalController {
      */
     public function store($data) {
 
-        $connection = Connection::getInstance()->get_database_instance();
-
-        $stmt = $connection->prepare("INSERT INTO withdrawals (payment_method, type, date, amount, description) VALUES (:payment_method, :type, :date, :amount, :description)");
+        $stmt = $this->connection->prepare("INSERT INTO withdrawals (payment_method, type, date, amount, description) VALUES (:payment_method, :type, :date, :amount, :description)");
 
 
         $stmt->bindValue(":payment_method", $data["payment_method"]);
@@ -42,7 +52,14 @@ class WithdrawalController {
     /**
      * Muestra un único recurso especificado
      */
-    public function show() {}
+    public function show($id) {
+        $stmt = $this->connection->prepare("SELECT * FROM withdrawals WHERE id=:id");
+        $stmt->execute([
+            ":id" => $id
+        ]);
+        $result = $stmt->fetch();
+        echo "El registro con id $id dice que te gastaste {$result['amount']} USD en: {$result['description']}";
+    }
 
     /**
      * Muestra el formulario para editar un recurso

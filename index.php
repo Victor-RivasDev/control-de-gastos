@@ -17,6 +17,8 @@ $incomes_controller->store([
     "description" => "Pago de mi salario por mi arduo y muy bien trabajo :D"
 ]); */
 
+
+/*
 $withdrawal_controller = new WithdrawalController();
 $withdrawal_controller->store([
     "payment_method" => PaymentMethodEnum::CreditCard->value,
@@ -25,3 +27,16 @@ $withdrawal_controller->store([
     "amount" => 50,
     "description" => "Compré Juguetes para mis michis."
 ]);
+*/
+
+/*$withdrawal_controller = new WithdrawalController();
+$withdrawal_controller->index();
+*/
+/*
+$withdrawal_controller = new WithdrawalController();
+$withdrawal_controller->show(1);
+*/
+/*
+$incomes_controller = new IncomesController();
+$incomes_controller->index();
+*/
